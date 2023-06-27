@@ -1,0 +1,52 @@
+body{
+    background-color: white;
+    color: black;
+    max-width: 600px;
+    margin: auto;
+    font-family: sans-serif;
+}
+p{
+    line-height: 1.5;
+}
+article + article{
+    margin-top: 3rmem;
+    border-top: 1px solid grey;
+    padding-top: 3rem;
+}
+.articles h3{
+    color:cadetblue;
+
+}
+.article h3{
+    color:cadetblue;
+
+}
+
+.article p{
+    color:burlywood;
+
+}
+
+.articles:hover{
+    color: aquamarine;
+    font-size: 1.1em;
+    transition: 0.5s;
+}
+
+.articles{
+
+}
+
+a {
+    color:burlywood;
+    text-decoration: none;
+} 
+.goBack{
+    color: black;
+    padding: 3px;
+}
+.goBack:hover{
+    background-color: #f0f0f0;
+    transition: 0.5s;
+    
+}

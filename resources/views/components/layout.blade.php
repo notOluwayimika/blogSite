@@ -17,10 +17,14 @@
             </div>
 
             <div class="mt-8 md:mt-0">
-                @guest
-                    <a href="/register" class="text-xs font-bold uppercase px-2">Register</a>
+                <a href='/posts' class="text-xs font-bold uppercase px-2 hover:text-blue-500 transition-all">Posts</a>
                     |
-                    <a href="/login" class="text-xs font-bold uppercase px-2">Login</a>
+                @guest
+                    <a href="/register" class="text-xs font-bold uppercase px-2 hover:text-blue-500 transition-all">Register</a>
+                    |
+                    <a href="/login" class="text-xs font-bold uppercase px-2 hover:text-blue-500 transition-all">Login</a>
+                    
+
                 @endguest
                 @auth
                     <span class='text-xs font-bold uppercase py-2 px-5 '>Welcome, {{auth()->user()->name}}.

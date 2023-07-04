@@ -1,5 +1,5 @@
 <x-layout>
-<body style="font-family: Open Sans, sans-serif">
+<body style="font-family: Open Sans, sans-serif; height:100%">
     <section class="px-6 py-8">
 
         <main class="max-w-6xl mx-auto mt-10 lg:mt-20 space-y-6">
@@ -12,9 +12,9 @@
                     </p>
 
                     <div class="flex items-center w-16 lg:justify-center text-sm mt-4">
-                        <img src="/images/avatar.svg" alt="Lary avatar">
+                        <img src="/images/avatar.svg" alt="avatar">
                         <div class="ml-3 text-left">
-                            <h5 class="font-bold"><a href="/posts?={{$post->author->username}}"=>{{$post->author->name}}</a></h5>
+                            <h5 class="font-bold"><a href="/posts?author={{$post->author->username}}"=>{{$post->author->name}}</a></h5>
                         </div>
                     </div>
                 </div>
@@ -53,10 +53,20 @@
                         <p>{{$post->body}}</p>
                     </div>
                 </div>
+                
+                <section class='col-span-8 col-start-5 mt-10'>
+                    <h1 class="mb-2"><strong>Comments:</strong></h1>
+                    @foreach ($post->comments as $comment)
+                        <x-post-comment :comment='$comment'/>
+                    @endforeach
+                    
+            </section>
             </article>
+            
         </main>
-
+        
     </section>
+    
 </body>
 
 </x-layout>

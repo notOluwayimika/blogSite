@@ -3,7 +3,7 @@
             {{ $attributes->merge(['class'=>'transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl'])}}>
             <div class="py-6 px-5 flex flex-col justify-between" style='height:40rem'>
                 <div>
-                    <img src="/images/illustration-{{collect(range(1,4))->shuffle()->slice(0, 4)[0]}}.jpg" alt="Blog Post illustration" class="rounded-xl w-full h-64">
+                    <img src="{{str_ireplace('public', '',asset('storage/'.$post->thumbnail))}}" alt="Blog Post illustration" class="rounded-xl w-full h-64">
                 </div>
 
                 <div class="mt-8 flex flex-col justify-between ">

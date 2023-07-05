@@ -1,52 +1,23 @@
-body{
-    background-color: white;
-    color: black;
-    max-width: 600px;
-    margin: auto;
-    font-family: sans-serif;
-}
-p{
-    line-height: 1.5;
-}
-article + article{
-    margin-top: 3rmem;
-    border-top: 1px solid grey;
-    padding-top: 3rem;
-}
-.articles h3{
-    color:cadetblue;
 
-}
-.article h3{
-    color:cadetblue;
-
-}
-
-.article p{
-    color:burlywood;
-
-}
-
-.articles:hover{
-    color: aquamarine;
-    font-size: 1.1em;
+.commentsection {
+    display: block;
+    outline: none;
+    border: none;
+    height: 2em;
+    font-size: 16px;
+    margin-bottom: 1px;
     transition: 0.5s;
-}
-
-.articles{
-
-}
-
-a {
-    color:burlywood;
-    text-decoration: none;
-} 
-.goBack{
-    color: black;
-    padding: 3px;
-}
-.goBack:hover{
-    background-color: #f0f0f0;
-    transition: 0.5s;
-    
+  }
+  
+  .commentsection:focus {
+    border-bottom: 1px solid #0572ce;
+    box-shadow: 0 1px 0 0 #0572ce;
+    outline: none;
+  }
+  html{
+    scroll-behavior: smooth;
+  }
+.adminlinks:hover{
+    color: #0572ce;
+    transition: 0.5s ;
 }

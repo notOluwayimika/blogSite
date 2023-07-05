@@ -5,7 +5,7 @@
         <main class="max-w-6xl mx-auto mt-10 lg:mt-20 space-y-6">
             <article class="max-w-4xl mx-auto lg:grid lg:grid-cols-12 gap-x-10">
                 <div class="col-span-4 lg:text-center lg:pt-14 mb-10">
-                    <img src="/images/illustration-{{collect(range(1,4))->shuffle()->slice(0, 4)[0]}}.jpg" alt="" class="rounded-xl">
+                    <img src="{{str_ireplace('public', '',asset('storage/'.$post->thumbnail))}}" alt="" class="rounded-xl">
 
                     <p class="mt-4 block text-gray-400 text-xs">
                         Published <time>{{$post->created_at->diffForHumans()}}</time>
@@ -48,13 +48,28 @@
                             {{$post->excerpt}}
                         </p>
 
-                        <h2 class="font-bold text-lg">Sed quia consequuntur</h2>
 
                         <p>{{$post->body}}</p>
                     </div>
                 </div>
                 
                 <section class='col-span-8 col-start-5 mt-10'>
+                    @auth
+                        <form action="/posts/{{$post->id}}/comments" method='POST' class='border border-gray-200 p-6 rounded-xl'>
+                            @csrf
+                            <header class='flex items-center'>
+                                <img src="/images/avatar.svg" width='40' height='40' class='rounded-xl' alt="avatar">
+                                <input required type="text" name="body" class="ml-3 mt-1 inline flex w-full text-xs focus:outline-none focus:border-4 commentsection"  placeholder="Leave a comment..."/>
+                                <button type="submit" class='bg-blue-500 text-white text-xs rounded-2xl px-10 py-2 hover:bg-blue-600'>Post</button>
+                            </header>
+
+                        </form>
+                        @error('body')
+                            <span class='text-xs text-red'>{{$message}}</span>
+                        @enderror
+                        
+                    @endauth
+                    
                     <h1 class="mb-2"><strong>Comments:</strong></h1>
                     @foreach ($post->comments as $comment)
                         <x-post-comment :comment='$comment'/>

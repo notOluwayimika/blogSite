@@ -4,6 +4,7 @@
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="/app.css" rel='stylesheet'>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 
@@ -16,26 +17,27 @@
                 </a>
             </div>
 
-            <div class="mt-8 md:mt-0">
-                <a href='/posts' class="text-xs font-bold uppercase px-2 hover:text-blue-500 transition-all">Posts</a>
+            <div class="mt-8 md:mt-0 flex">
+                <a href='/posts' class="text-xs font-bold uppercase px-2 hover:text-blue-500 transition-all pt-1">Posts</a>
                     |
                 @guest
-                    <a href="/register" class="text-xs font-bold uppercase px-2 hover:text-blue-500 transition-all">Register</a>
+                    <a href="/register" class="text-xs font-bold uppercase px-2 hover:text-blue-500 transition-all pt-1">Register</a>
                     |
-                    <a href="/login" class="text-xs font-bold uppercase px-2 hover:text-blue-500 transition-all">Login</a>
+                    <a href="/login" class="text-xs font-bold uppercase px-2 hover:text-blue-500 transition-all pt-1">Login</a>
                     
 
                 @endguest
                 @auth
-                    <span class='text-xs font-bold uppercase py-2 px-5 '>Welcome, {{auth()->user()->name}}.
-                    </span>
-                    <form class="inline" action="/logout" method="post">
+                    <x-dropdownheader >
+                        <x-slot name='trigger'>
+                        </x-slot>
+                    </x-dropdownheader>
+                    
                         @csrf
-                        <button class="text-xs font-bold uppercase bg-blue-500 rounded-full text-white py-2 px-5 ml-3" type='submit'>logout</button></form>
                 @endauth
                 
 
-                <a href="#" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
+                <a href="#newsletter" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
                     Subscribe for Updates
                 </a>
             </div>
@@ -45,7 +47,7 @@
 
                             
 
-        <footer class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
+        <footer id='newsletter' class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
             <img src="/images/newsletter.png" alt="" class="mx-auto mb-6" style="width: 50px;">
             <h5 class="text-3xl">Stay in touch with the latest posts</h5>
             <p class="text-sm mt-3">Promise to keep the inbox clean. No bugs.</p>

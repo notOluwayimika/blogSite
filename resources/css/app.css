@@ -1,0 +1,13 @@
+.commentsection {
+    display: block;
+    outline: none;
+    border: none;
+    height: 2em;
+    font-size: 16px;
+    margin-bottom: 1px;
+  }
+  
+  .commentsection:focus {
+    border-bottom: 1px solid #0572ce;
+    box-shadow: 0 1px 0 0 #0572ce;
+  }

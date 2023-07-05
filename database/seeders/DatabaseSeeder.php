@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'name' => "Oluwayimika Ojo-Bello"
         ]);
 
-        Comment::factory(10)->create([
+        Comment::factory(1)->create([
             'user_id' => $user->id
         ]);
 

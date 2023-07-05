@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
     public function index(){
         return view('posts', [
-            'posts' => Post::latest()->filter(request(['search','category','author']))->paginate(5)->withQueryString(),
+            'posts' => Post::latest()->filter(request(['search','category','author']))->paginate(6)->withQueryString(),
             'categories' => Category::all(),
             'currentCategory'=>Category::firstWhere('category',request('category'))
         ]);
@@ -22,5 +23,6 @@ class PostController extends Controller
                 'categories' => Category::all()
             ]) ; 
         }
+        
 
 }

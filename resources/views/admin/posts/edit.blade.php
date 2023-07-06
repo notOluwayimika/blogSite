@@ -16,6 +16,7 @@
                 @error('thumbnail')
                     <p class='text-red-500 text-xs mt-1'>{{$message}}</p>
                 @enderror
+                <img src="{{str_ireplace('public', '',asset('storage/'.$post->thumbnail))}}" alt="" width="100" class="rounded-xl">
             </div>
             <div class='mb-10'>
                 <label for="excerpt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Excerpt</label>

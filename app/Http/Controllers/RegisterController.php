@@ -20,7 +20,11 @@ class RegisterController extends Controller
         ]);
         $attributes['password']=bcrypt($attributes['password']);
         $user=User::create($attributes);
-        auth()->login($user);
-        return redirect('/posts')->with('success','Your account has been created.');
+        $token = $user->createToken('myapptoken')->plainTextToken;
+        $response = [
+            'user'=>$user,
+            'token'=>$token
+        ];
+        return response($response,201);
     }
 }

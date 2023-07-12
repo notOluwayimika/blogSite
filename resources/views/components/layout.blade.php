@@ -89,12 +89,15 @@
         </div>
     @endif
 </body>
-<!-- jQuery -->
 
-<script>
-    $(document).ready( function () {
-        $('#myTable').DataTable();
-} );
+<script type="text/javascript">
+    $('#edit_comment').on('click', function (e){
+        e.preventDefault();
+        $('#edit_comment_form')[0].classList.toggle("hidden");
+        $("#"+e.target.getAttribute('data-id'))[0].classList.toggle("hidden");
+        $('#editcommentinput')[0].focus();
+        
+    })
 </script>
 <!--Datatables -->
 

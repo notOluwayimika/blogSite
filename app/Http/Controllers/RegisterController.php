@@ -25,6 +25,9 @@ class RegisterController extends Controller
             'user'=>$user,
             'token'=>$token
         ];
-        return response($response,201);
+        if(request()->is('api*')){
+            return response($response,201);
+        } 
+        return redirect('/posts');
     }
 }

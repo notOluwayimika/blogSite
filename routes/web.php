@@ -1,12 +1,11 @@
 <?php
 
 use App\Http\Controllers\AdminPostController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
-use App\Models\Category;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 
@@ -37,12 +36,20 @@ Route::post('/login', [SessionsController::class, 'store'])->middleware('guest')
 
 
 //admin controllers
-Route::get('admin/post/create', [AdminPostController::class, 'create'])->middleware('admin');
-Route::post('/admin/post', [AdminPostController::class, 'store'])->middleware('admin');
-Route::get('admin/posts', [AdminPostController::class, 'index'])->middleware('admin');
-Route::get('admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->middleware('admin');
-Route::patch('admin/post/{post}', [AdminPostController::class, 'update'])->middleware('admin');
-Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy'])->middleware('admin');
+Route::get('admin/post/create', [AdminPostController::class, 'create'])->middleware('role:admin|writer');
+Route::post('/admin/post', [AdminPostController::class, 'store'])->middleware('role:admin|writer');
+Route::get('admin/posts', [AdminPostController::class, 'index'])->middleware('role:admin|writer');
+Route::get('admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->middleware('role:admin|writer');
+Route::patch('admin/post/{post}', [AdminPostController::class, 'update'])->middleware('role:admin|writer');
+Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy'])->middleware('role:admin|writer');
 
+//comments
+Route::delete('/comments/{id}',[CommentController::class,'destroy'])->middleware('auth');
+Route::put('/comments/{id}',[CommentController::class,'update'])->middleware('auth');
+
+//category
+Route::get('admin/categories', [CategoryController::class, 'index'])->middleware('role:admin');
+Route::delete('admin/categories/{id}',[CategoryController::class,'destroy'])->middleware('role:admin');
+Route::get('/category/datatable', [PostController::class, 'category_datatable'])->name('category.list');
 
 

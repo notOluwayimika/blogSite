@@ -43,6 +43,22 @@
     
             <button type='submit' class='bg-blue-500 text-white  uppercase  font-bold text-xs  py-2 px-10 rounded-2xl hover:bg-blue-600'>Update</button>
         </form>
+
+        <div>
+            <ul>
+                @foreach ($post->comments as $comment)
+                    <li>
+                        <span class='text-xs text-blue-500 pr-1'>written by:</span>{{$comment->author->username}} <span class='text-xs text-blue-500 pl-3 pr-1'>Comment:</span> {{$comment->body}}
+                        <form id='logout' class="inline" action="/comments/{{$comment->id}}" method="post" class='hidden' >
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class='pl-3 px-3 leading-6 text-red-500 hover:text-white hover:bg-red-500 rounded-2xl '>Delete </button>
+                        </form>
+                    </li>
+                @endforeach
+            </ul>
+            
+        </div>
     </x-setting>
     
 </x-layout>

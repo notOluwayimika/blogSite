@@ -10,9 +10,12 @@
     </button>
 
     <div x-show="show" class="py-2 absolute bg-gray-100 mt-2 rounded-xl w-32 z-50" style="display: none">
-        @can('admin')
-            <a href='/admin/posts' class=" block text-left px-3 text-sm leading-6 hover:bg-blue-500 hover:text-white focus:bg-blue-500 hover:text-white {{request()->is('/admin/dashboard')?'bg-blue-500 text-white':''}}">All Posts</a>
-            <a href='/admin/post/create' class=" block text-left px-3 text-sm leading-6 hover:bg-blue-500 hover:text-white focus:bg-blue-500 hover:text-white {{request()->is('/admin/dashboard')?'bg-blue-500 text-white':''}}">New Post</a>
+        @can('edit_post')
+            <a href='/admin/posts' class=" block text-left px-3 text-sm leading-6 hover:bg-blue-500 hover:text-white focus:bg-blue-500 hover:text-white {{request()->is('/admin/posts')?'bg-blue-500 text-white':''}}">All Posts</a>
+            <a href='/admin/post/create' class=" block text-left px-3 text-sm leading-6 hover:bg-blue-500 hover:text-white focus:bg-blue-500 hover:text-white {{request()->is('/admin/post/create')?'bg-blue-500 text-white':''}}">New Post</a>
+        @endcan
+        @can('edit_category')
+            <a href='/admin/categories' class=" block text-left px-3 text-sm leading-6 hover:bg-blue-500 hover:text-white focus:bg-blue-500 hover:text-white {{request()->is('/admin/dashboard')?'bg-blue-500 text-white':''}}">Categories</a>
         @endcan
         <form id='logout' class="inline" action="/logout" method="post" class='hidden' >
             @csrf

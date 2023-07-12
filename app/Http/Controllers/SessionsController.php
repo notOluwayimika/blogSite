@@ -9,10 +9,15 @@ use Illuminate\Validation\ValidationException;
 class SessionsController extends Controller
 {
     public function destroy(Request $request){
-        auth()->user()->tokens()->delete();
+        $user = request()->user();
+        // $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
+        $user->tokens()->delete();
+        if(request()->is('api*'))
         return [
             'message' => 'logged out'
         ];
+        auth()->logout();
+        return redirect('/posts');
     }
 
     public function create(){
@@ -22,6 +27,7 @@ class SessionsController extends Controller
 
 
     public function store(){
+        
         $attributes =  request()->validate([
             'email' => 'required|email|max:255|min:3|exists:users,email',
             'password' => 'required|max:255|min:8'
@@ -39,5 +45,9 @@ class SessionsController extends Controller
             'user'=>$user,
             'token'=>$token
         ];
-        return response($response,201);
+        if(request()->is('api*')){
+            return response($response,201);
+        } 
+        return redirect('/posts');
+        
     }}

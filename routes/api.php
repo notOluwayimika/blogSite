@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\PostsController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use Illuminate\Http\Request;
@@ -18,19 +20,50 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Public Routes
-// Route::resource('/posts', PostsController::class);
+// Auth
 Route::post('/register',[RegisterController::class,'store']);
-Route::get('/posts',[PostsController::class,'index']);
-Route::get('/posts/{id}',[PostsController::class,'show']);
-Route::get('/posts/search/{title}', [PostsController::class, 'search']); 
 Route::post('/login',[SessionsController::class,'store']);
-//Protexted Routes
+
+Route::get('/login', function(){
+    return 'Please login';
+})->name('login');
+
+//posts
+Route::get('/posts',[PostController::class,'index']);
+Route::get('/posts/{id}',[PostController::class,'show']);
+
+//comments
+Route::get('/comment',[CommentController::class,'index']);
+Route::get('/comment/{id}',[CommentController::class,'show']);
+
+//categories
+Route::get('/category',[CategoryController::class,'index']);
+Route::get('/category/{id}',[CategoryController::class,'show']);
+
+//search
+Route::get('/posts/search/{title}', [PostController::class, 'search']); 
+
+
+
+//Protected Routes
 Route::group(['middleware'=>['auth:sanctum']], function () {
-    Route::post('/posts',[PostsController::class,'store']);
-    Route::put('/posts/{id}',[PostsController::class,'update']);
-    Route::delete('/posts/{id}',[PostsController::class,'destroy']);
+    //logout
     Route::post('/logout',[SessionsController::class,'destroy']);
    
+    //posts
+    Route::post('/posts',[PostController::class,'store'])->middleware('role:admin|writer');
+    Route::put('/posts/{id}',[PostController::class,'update'])->middleware('role:admin|writer');
+    Route::delete('/posts/{id}',[PostController::class,'destroy'])->middleware('role:admin|writer');
+
+    //category
+    Route::post('/category',[CategoryController::class,'store'])->middleware('role:admin|writer');
+    Route::put('/category/{id}',[CategoryController::class,'update'])->middleware('role:admin|writer');
+    Route::delete('/category/{id}',[CategoryController::class,'destroy'])->middleware('role:admin|writer');
+
+    //comments
+    Route::post('/comments/{post_id}',[CommentController::class,'store']);
+    Route::put('/comments/{id}',[CommentController::class,'update']);
+    Route::delete('/comments/{id}',[CommentController::class,'destroy']);
 });
 
 

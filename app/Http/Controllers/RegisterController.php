@@ -20,6 +20,7 @@ class RegisterController extends Controller
         ]);
         $attributes['password']=bcrypt($attributes['password']);
         $user=User::create($attributes);
+        $user->assignRole('reader');
         $token = $user->createToken('myapptoken')->plainTextToken;
         $response = [
             'user'=>$user,

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
@@ -52,4 +53,20 @@ class CategoryController extends Controller
         return back();
     }
 
+    public function edit(Category $category){
+        return view('admin.categories.edit', ['category' => $category]);
+    }
+
+    public function datatable(Request $request){
+        if($request->ajax()){
+            $data = Category::latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $actionBtn = "<a href='/admin/category/$row->id/edit' class='ml-3 text-blue-600 hover:text-blue-900'>Edit</a> 
+                    <button type='submit' class='ml-3 px-2 inline-flex text-xs  leading-5  font-bold rounded-full bg-red-200 text-red-800' data-id=$row->id>Delete</button>";
+                    return $actionBtn;
+                })->rawColumns(['action'])->make(true);
+        }
+}
 }

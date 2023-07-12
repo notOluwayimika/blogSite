@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -64,6 +65,15 @@ Route::group(['middleware'=>['auth:sanctum']], function () {
     Route::post('/comments/{post_id}',[CommentController::class,'store']);
     Route::put('/comments/{id}',[CommentController::class,'update']);
     Route::delete('/comments/{id}',[CommentController::class,'destroy']);
+
+    //users
+    Route::get('/users',[UserController::class, 'index'])->middleware('role:admin');
+    //edit user
+    Route::put('/users/{id}',[UserController::class,'update'])->middleware('owner');
+    //delete user
+    Route::delete('/users/{id}',[UserController::class,'destroy'])->middleware('role:admin');
+    //change user role
+    Route::post('/users/{user}/role',[UserController::class,'role'])->middleware('role:admin');
 });
 
 

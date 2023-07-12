@@ -88,17 +88,6 @@ class PostController extends Controller
         }
     }
 
-        public function category_datatable(Request $request){
-            if($request->ajax()){
-                $data = Category::latest()->get();
-                return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-                        $actionBtn = "<a href='/admin/posts/$row->id/edit' class='ml-3 text-blue-600 hover:text-blue-900'>Edit</a> 
-                        <button type='submit' class='ml-3 px-2 inline-flex text-xs  leading-5  font-bold rounded-full bg-red-200 text-red-800' data-id=$row->id>Delete</button>";
-                        return $actionBtn;
-                    })->rawColumns(['action'])->make(true);
-            }
-    }
+        
 }
 

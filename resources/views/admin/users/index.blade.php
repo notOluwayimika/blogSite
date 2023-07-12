@@ -1,41 +1,75 @@
 <x-layout>
-    <x-setting heading='Manage Users'>
-        <div class='flex flex-col'>
-            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class='shadow overflow-hidden border-b min-w-full sm:px-6 lg:px-8'>
-                    <table class='min-w-full divide-y divid-gray-200'>
-                        <tbody class='bg-white divide-y divide-gray-200'>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class='flex-shrink-0 h-10 w-10'>
-                                            <img src="/images/avatar.svg" class="h-10 w-10 rounded-full" alt="">
-                                        </div>
-                                        <div class='ml-4'>
-                                            <div class="text-xs font-medium text-gray-900">
-                                                Oluwayimika Ojo-Bello
-                                            </div>
-                                            <div class='text-xs text-gray-500'>
-                                                mkyimika@gmail.com
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class='px-6 py-4 whitespace-nowrap'>
-                                    <div class='text-sm text-gray-900'>Regional</div>
-                                    <div class='text-sm text-gray-500'>Optimization</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    <span class="px-2 inline-flex text-xs  leading-5  font-bold rounded-full bg-green-100 text-green-800">Active</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Admin</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-medium"><a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+    <x-setting heading="All Posts">
+    <div class="container mt-5">
+        <table class="table table-bordered" id='myTable'>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+       
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+      $(function () {
+        
+        var table = $('#myTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('user.list') }}",
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'name', name: 'name'},
+                {data: 'username', name: 'username'},
+                {data: 'email', name: 'email'},
+                {
+                    data: 'action', 
+                    name: 'action', 
+                    orderable: true, 
+                    searchable: true
+                },
+            ]
+        });
+        
+      });
+    
+      $('#myTable').on('click', 'button[data-id]', function (e) { 
+        // $('#myTable').DataTable().row(this).remove().draw();
+        e.preventDefault();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var url = window.location.href+'/'+$(this).data('id');
+
+        // confirm then
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            dataType: 'json',
+            data: {method: '_DELETE', submit: true}
+        }).always(function (data) {
+            $('#myTable').DataTable().draw(false);
+        });
+        
+    });
+    
+    </script>
+    </html>
+    
         
         </x-setting>
 </x-layout>

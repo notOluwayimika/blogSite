@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -49,7 +50,17 @@ Route::put('/comments/{id}',[CommentController::class,'update'])->middleware('au
 
 //category
 Route::get('admin/categories', [CategoryController::class, 'index'])->middleware('role:admin');
+Route::get('admin/categories/{category}/edit', [CategoryController::class, 'edit'])->middleware('role:admin');
 Route::delete('admin/categories/{id}',[CategoryController::class,'destroy'])->middleware('role:admin');
-Route::get('/category/datatable', [PostController::class, 'category_datatable'])->name('category.list');
+Route::get('/category/datatable', [CategoryController::class, 'datatable'])->name('category.list');
 
-
+//users
+Route::get('admin/users',[UserController::class, 'index'])->middleware('role:admin');
+Route::get('admin/users/{user}/edit',[UserController::class, 'edit'])->middleware('role:admin');
+Route::get('/user/datatable', [UserController::class, 'datatable'])->name('user.list');
+Route::delete('admin/users/{id}',[UserController::class,'destroy'])->middleware('role:admin');
+Route::put('admin/users/{id}',[UserController::class,'update'])->middleware('role:admin');
+Route::get('users/{id}',[UserController::class,'show'])->middleware('owner');
+Route::post('admin/users/{user}/role',[UserController::class,'role'])->middleware('role:admin');
+//edit user
+Route::put('/users/{id}',[UserController::class,'update']);

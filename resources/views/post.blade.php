@@ -5,16 +5,16 @@
         <main class="max-w-6xl mx-auto mt-10 lg:mt-20 space-y-6">
             <article class="max-w-4xl mx-auto lg:grid lg:grid-cols-12 gap-x-10">
                 <div class="col-span-4 lg:text-center lg:pt-14 mb-10">
-                    <img src="{{str_ireplace('public', '',asset('storage/'.$post->thumbnail))}}" alt="" class="rounded-xl">
+                    <img src="{{str_ireplace('public', '',asset('storage/'.($post->thumbnail??'')))}}" alt="" class="rounded-xl">
 
                     <p class="mt-4 block text-gray-400 text-xs">
-                        Published <time>{{$post->created_at->diffForHumans()}}</time>
+                        Published <time>{{$post->created_at->diffForHumans()??''}}</time>
                     </p>
 
                     <div class="flex items-center w-16 lg:justify-center text-sm mt-4">
                         <img src="/images/avatar.svg" alt="avatar">
                         <div class="ml-3 text-left">
-                            <h5 class="font-bold"><a href="/posts?author={{$post->author->username}}"=>{{$post->author->name}}</a></h5>
+                            <h5 class="font-bold"><a href="/posts?author={{$post->author->username??''}}"=>{{$post->author->name}}</a></h5>
                         </div>
                     </div>
                 </div>
@@ -35,27 +35,27 @@
 
                             Back to Posts
                         </a>
-                        <x-category-button :category="$post->category" />
+                        <x-category-button :category="($post->category??'')" />
                         
                     </div>
 
                     <h1 class="font-bold text-3xl lg:text-4xl mb-10">
-                        {{$post->title}}
+                        {{$post->title??''}}
                     </h1>
 
                     <div class="space-y-4 lg:text-lg leading-loose">
                         <p>
-                            {{$post->excerpt}}
+                            {{$post->excerpt??''}}
                         </p>
 
 
-                        <p>{{$post->body}}</p>
+                        <p>{{$post->body??''}}</p>
                     </div>
                 </div>
                 
                 <section class='col-span-8 col-start-5 mt-10'>
                     @auth
-                        <form action="/posts/{{$post->id}}/comments" method='POST' class='border border-gray-200 p-6 rounded-xl'>
+                        <form action="/posts/{{$post->id??''}}/comments" method='POST' class='border border-gray-200 p-6 rounded-xl'>
                             @csrf
                             <header class='flex items-center'>
                                 <img src="/images/avatar.svg" width='40' height='40' class='rounded-xl' alt="avatar">

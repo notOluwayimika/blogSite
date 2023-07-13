@@ -27,7 +27,7 @@
             </div>
 
             <div class="mt-8 md:mt-0 flex">
-                <a href='/posts' class="text-xs font-bold uppercase px-2 hover:text-blue-500 transition-all pt-1">Posts</a>
+                <a href='/posts' class="text-xs font-bold uppercase px-2 hover:text-blue-500 transition-all pt-1 {{request()->is('posts*')?'text-blue-500':''}}">Posts</a>
                     |
                 @guest
                     <a href="/register" class="text-xs font-bold uppercase px-2 hover:text-blue-500 transition-all pt-1">Register</a>
@@ -87,6 +87,11 @@
     @if (session()->has('success'))
         <div x-data='{show:true}' x-transition x-show='show' x-init='setTimeout(()=>show=false,4000)' class='fixed bottom-3 right-3 bg-blue-500 text-sm text-white py-2 px-4 rounded-xl'>
             <p>{{ session('success') }}</p>
+        </div>
+    @endif
+    @if (session()->has('failure'))
+        <div x-data='{show:true}' x-transition x-show='show' x-init='setTimeout(()=>show=false,4000)' class='fixed bottom-3 right-3 bg-red-500 text-sm text-white py-2 px-4 rounded-xl'>
+            <p>{{ session('failure') }}</p>
         </div>
     @endif
 </body>

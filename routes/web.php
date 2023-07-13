@@ -37,12 +37,12 @@ Route::post('/login', [SessionsController::class, 'store'])->middleware('guest')
 
 
 //admin controllers
-Route::get('admin/post/create', [AdminPostController::class, 'create'])->middleware('role:admin|writer');
-Route::post('/admin/post', [AdminPostController::class, 'store'])->middleware('role:admin|writer');
-Route::get('admin/posts', [AdminPostController::class, 'index'])->middleware('role:admin|writer');
-Route::get('admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->middleware('role:admin|writer');
-Route::patch('admin/post/{post}', [AdminPostController::class, 'update'])->middleware('role:admin|writer');
-Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy'])->middleware('role:admin|writer');
+Route::get('admin/post/create', [PostController::class, 'create'])->middleware('role:admin|writer');
+Route::post('/admin/post', [PostController::class, 'store'])->middleware('role:admin|writer');
+Route::get('admin/posts', [PostController::class, 'admin_index'])->middleware('role:admin|writer');
+Route::get('admin/posts/{post}/edit', [PostController::class, 'edit'])->middleware('role:admin|writer');
+Route::patch('admin/post/{post}', [PostController::class, 'update'])->middleware('role:admin|writer');
+Route::delete('admin/posts/{post}', [PostController::class, 'destroy'])->middleware('role:admin|writer');
 
 //comments
 Route::delete('/comments/{id}',[CommentController::class,'destroy'])->middleware('auth');
@@ -53,6 +53,8 @@ Route::get('admin/categories', [CategoryController::class, 'index'])->middleware
 Route::get('admin/categories/{category}/edit', [CategoryController::class, 'edit'])->middleware('role:admin');
 Route::delete('admin/categories/{id}',[CategoryController::class,'destroy'])->middleware('role:admin');
 Route::get('/category/datatable', [CategoryController::class, 'datatable'])->name('category.list');
+Route::post('admin/category',[CategoryController::class,'store'])->middleware('role:admin|writer');
+Route::put('/admin/category/{id}',[CategoryController::class,'update'])->middleware('role:admin|writer');
 
 //users
 Route::get('admin/users',[UserController::class, 'index'])->middleware('role:admin');
